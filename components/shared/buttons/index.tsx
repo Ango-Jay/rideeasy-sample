@@ -1,4 +1,4 @@
-import globalUtilStyles from '@/styles';
+import globalUtilStyles from "@/styles";
 import {
   StyleProp,
   StyleSheet,
@@ -6,12 +6,12 @@ import {
   TouchableOpacityProps,
   View,
   ViewStyle,
-} from 'react-native';
-import type {ReactNode} from 'react';
-import CustomPressable from './Pressable';
-import CustomText from '../Text';
-import {scale} from 'react-native-size-matters';
-import {bgColorStyle, borderColorStyle, textColorStyle} from '@/styles/color';
+} from "react-native";
+import type { ReactNode } from "react";
+import CustomPressable from "./Pressable";
+import CustomText from "../Text";
+import { scale } from "react-native-size-matters";
+import { bgColorStyle, borderColorStyle, textColorStyle } from "@/styles/color";
 
 interface Props extends TouchableOpacityProps {
   containerStyle?: StyleProp<ViewStyle>;
@@ -48,18 +48,20 @@ const CustomButton = ({
           globalUtilStyles.itemsCenter,
           globalUtilStyles.justifyCenter,
           styles.btnBorderRadius,
-          disabled ? bgColorStyle['light-gray'] : bgColorStyle.primary,
+          disabled ? bgColorStyle["light-gray"] : bgColorStyle.primary,
           disabled && {
             opacity: 0.7,
           },
           borderColorStyle.primary,
           props.style,
-        ]}>
+        ]}
+      >
         {Boolean(text) ? (
           <CustomText
             style={[textColorStyle.white, textStyle?.style]}
             weight={textStyle?.weight}
-            size={textStyle?.size}>
+            size={textStyle?.size}
+          >
             {text}
           </CustomText>
         ) : (

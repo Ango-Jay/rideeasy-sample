@@ -1,20 +1,20 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const MontserratFontStyle = StyleSheet.create({
   fontNormal: {
-    fontFamily: 'Montserrat-Regular',
-    fontWeight: '400',
+    fontFamily: "Montserrat-Regular",
+    fontWeight: "400",
   },
   fontMedium: {
-    fontFamily: 'Montserrat-Medium',
-    fontWeight: '500',
+    fontFamily: "Montserrat-Medium",
+    fontWeight: "500",
   },
   fontSemiBold: {
-    fontFamily: 'Montserrat-SemiBold',
-    fontWeight: '600',
+    fontFamily: "Montserrat-SemiBold",
+    fontWeight: "600",
   },
   fontBold: {
-    fontFamily: 'Montserrat-Bold',
-    fontWeight: '700',
+    fontFamily: "Montserrat-Bold",
+    fontWeight: "700",
   },
 });

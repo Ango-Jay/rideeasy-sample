@@ -1,5 +1,5 @@
-import {appColors} from '@/constants/Colors';
-import {StyleSheet} from 'react-native';
+import { appColors } from "@/constants/Colors";
+import { StyleSheet } from "react-native";
 
 export const textColorStyle = StyleSheet.create({
   primary: {
@@ -11,8 +11,8 @@ export const textColorStyle = StyleSheet.create({
   black: {
     color: appColors.black,
   },
-  'light-gray': {
-    color: appColors['grayLight'],
+  "light-gray": {
+    color: appColors["grayLight"],
   },
   error: {
     color: appColors.danger,
@@ -29,8 +29,8 @@ export const bgColorStyle = StyleSheet.create({
   black: {
     backgroundColor: appColors.black,
   },
-  'grayLight': {
-    backgroundColor: appColors['grayLight'],
+  grayLight: {
+    backgroundColor: appColors["grayLight"],
   },
 });
 

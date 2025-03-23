@@ -1,16 +1,16 @@
-import {Skeleton} from 'moti/skeleton';
-import {useState} from 'react';
-import FastImage, {FastImageProps} from 'react-native-fast-image';
-import {View, type ViewStyle} from 'react-native';
-import CustomText from '../Text';
-import globalUtilStyles from '@/styles';
+import { Skeleton } from "moti/skeleton";
+import { useState } from "react";
+import FastImage, { FastImageProps } from "react-native-fast-image";
+import { View, type ViewStyle } from "react-native";
+import CustomText from "../Text";
+import globalUtilStyles from "@/styles";
 
 interface Props extends FastImageProps {
   isVisible?: boolean;
   label?: string;
 }
 
-const CustomImage = ({isVisible, label, ...props}: Props) => {
+const CustomImage = ({ isVisible, label, ...props }: Props) => {
   const [isLoading, setIsLoading] = useState(true);
   return (
     <View
@@ -19,7 +19,8 @@ const CustomImage = ({isVisible, label, ...props}: Props) => {
         globalUtilStyles.itemsCenter,
         globalUtilStyles.wfull,
         props.style as ViewStyle,
-      ]}>
+      ]}
+    >
       <>
         <View
           style={[
@@ -28,7 +29,8 @@ const CustomImage = ({isVisible, label, ...props}: Props) => {
             {
               zIndex: 2,
             },
-          ]}>
+          ]}
+        >
           {props?.source ? (
             <FastImage
               onLoad={() => {
@@ -53,13 +55,14 @@ const CustomImage = ({isVisible, label, ...props}: Props) => {
               globalUtilStyles.itemsCenter,
               globalUtilStyles.absolute,
               globalUtilStyles.roundedfull,
-              {zIndex: 5},
-            ]}>
+              { zIndex: 5 },
+            ]}
+          >
             <Skeleton
               radius={200}
-              colorMode={'light'}
-              width={'100%'}
-              height={'100%'}
+              colorMode={"light"}
+              width={"100%"}
+              height={"100%"}
             />
           </View>
         )}

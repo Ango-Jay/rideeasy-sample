@@ -1,4 +1,4 @@
-import {PhoneNumberUtil} from 'google-libphonenumber';
+import { PhoneNumberUtil } from "google-libphonenumber";
 const phoneUtil = PhoneNumberUtil.getInstance();
 
 interface args {
@@ -6,7 +6,11 @@ interface args {
   countryCode: string;
   onValidate: (isValid: boolean) => void;
 }
-const validatePhoneNumber = ({phoneNumber, countryCode, onValidate}: args) => {
+const validatePhoneNumber = ({
+  phoneNumber,
+  countryCode,
+  onValidate,
+}: args) => {
   try {
     const parsedNumber = phoneUtil.parse(phoneNumber, countryCode);
     const valid = phoneUtil.isValidNumber(parsedNumber);
