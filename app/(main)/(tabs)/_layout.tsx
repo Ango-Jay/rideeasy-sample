@@ -20,23 +20,11 @@ const TabLayout = () => {
     <Tabs
       screenOptions={{
         headerShown: false,
-
         tabBarStyle: [tabBarStyle.tabStyle],
         tabBarActiveTintColor: appColors.primary,
         tabBarInactiveTintColor: appColors.gray,
       }}
     >
-      <Tabs.Screen
-        name="home"
-        options={{
-          tabBarIcon: ({ focused }) => {
-            return (
-              <HomeIcon fill={focused ? appColors.primary : appColors.gray} />
-            );
-          },
-          tabBarLabel: ({ color }) => <TabText title="Home" color={color} />,
-        }}
-      />
       <Tabs.Screen
         name="wallet"
         options={{
@@ -49,12 +37,25 @@ const TabLayout = () => {
         }}
       />
       <Tabs.Screen
+        name="home"
+        options={{
+          tabBarIcon: ({ focused }) => {
+            return (
+              <HomeIcon fill={focused ? appColors.primary : appColors.gray} />
+            );
+          },
+          tabBarLabel: ({ color }) => <TabText title="Home" color={color} />,
+        }}
+      />
+
+      <Tabs.Screen
         name="support"
         options={{
           tabBarIcon: ({ focused }) => {
             return (
               <SupportIcon
                 stroke={focused ? appColors.primary : appColors.gray}
+                fill={focused ? appColors.primary : appColors.gray}
               />
             );
           },

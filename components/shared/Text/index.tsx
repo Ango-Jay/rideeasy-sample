@@ -1,4 +1,4 @@
-import { JostFontStyle } from "@/styles/fonts";
+import { MontserratFontStyle } from "@/styles/fonts";
 import { type ReactNode } from "react";
 import { Text, TextProps } from "react-native";
 import { moderateScale } from "react-native-size-matters";
@@ -10,10 +10,10 @@ interface Props extends TextProps {
 }
 const CustomText = ({ weight = 400, size = 15, children, ...props }: Props) => {
   const fontStyle = {
-    "400": JostFontStyle.fontNormal,
-    "500": JostFontStyle.fontMedium,
-    "600": JostFontStyle.fontSemiBold,
-    "700": JostFontStyle.fontBold,
+    "400": MontserratFontStyle.fontNormal,
+    "500": MontserratFontStyle.fontMedium,
+    "600": MontserratFontStyle.fontSemiBold,
+    "700": MontserratFontStyle.fontBold,
   }[weight];
   return (
     <Text
