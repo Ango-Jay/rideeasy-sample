@@ -11,6 +11,9 @@ export const textColorStyle = StyleSheet.create({
   black: {
     color: appColors.black,
   },
+  gray: {
+    color: appColors.gray,
+  },
   "light-gray": {
     color: appColors["grayLight"],
   },

@@ -8,6 +8,7 @@ export const appColors = {
   primaryDisabled: "rgba(53 50 215, 0.5)",
   black: "#2A2A2A",
   white: "#FDFDFD",
+  gray: "#575757",
   grayLight: "#98A1B3",
   danger: "#F8183E",
   stroke: "#E6E7EE",
