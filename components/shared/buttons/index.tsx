@@ -48,7 +48,7 @@ const CustomButton = ({
           globalUtilStyles.itemsCenter,
           globalUtilStyles.justifyCenter,
           styles.btnBorderRadius,
-          disabled ? bgColorStyle["light-gray"] : bgColorStyle.primary,
+          disabled ? bgColorStyle["grayLight"] : bgColorStyle.primary,
           disabled && {
             opacity: 0.7,
           },

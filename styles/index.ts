@@ -9,6 +9,9 @@ const globalUtilStyles = ScaledSheet.create({
   wfull: {
     width: "100%",
   },
+  whalf: {
+    width: "50%",
+  },
   maxWidthFull: {
     maxWidth: "100%",
   },

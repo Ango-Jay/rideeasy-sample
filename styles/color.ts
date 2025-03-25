@@ -35,6 +35,18 @@ export const bgColorStyle = StyleSheet.create({
   grayLight: {
     backgroundColor: appColors["grayLight"],
   },
+  purpleLight: {
+    backgroundColor: appColors.purpleLight,
+  },
+  pinkLight: {
+    backgroundColor: appColors.pinkLight,
+  },
+  greenLight: {
+    backgroundColor: appColors.greenLight,
+  },
+  yellowLight: {
+    backgroundColor: appColors.yellowLight,
+  },
 });
 
 export const borderColorStyle = StyleSheet.create({

@@ -12,4 +12,8 @@ export const appColors = {
   grayLight: "#98A1B3",
   danger: "#F8183E",
   stroke: "#E6E7EE",
+  purpleLight: "#E6E5FA",
+  pinkLight: "#F5E0FF",
+  yellowLight: "#FEF8E1",
+  greenLight: "#E4FBE4",
 };
