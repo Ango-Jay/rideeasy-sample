@@ -47,6 +47,9 @@ export const bgColorStyle = StyleSheet.create({
   yellowLight: {
     backgroundColor: appColors.yellowLight,
   },
+  blueLight: {
+    backgroundColor: appColors.blueLight,
+  },
 });
 
 export const borderColorStyle = StyleSheet.create({
@@ -55,5 +58,11 @@ export const borderColorStyle = StyleSheet.create({
   },
   error: {
     borderColor: appColors.danger,
+  },
+  grayLight: {
+    borderColor: appColors["grayLight"],
+  },
+  white: {
+    borderColor: appColors.white,
   },
 });

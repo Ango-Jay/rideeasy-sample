@@ -45,6 +45,14 @@
       <key>NSAllowsLocalNetworking</key>
       <true/>
     </dict>
+      <key>NSCameraUsageDescription</key>
+    <string>We need access to your camera to enable you to capture and upload images</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Allow RideEasy to use your location.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Allow RideEasy to access your location</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Allow RideEasy to access your location</string>
     <key>NSUserActivityTypes</key>
     <array>
       <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>

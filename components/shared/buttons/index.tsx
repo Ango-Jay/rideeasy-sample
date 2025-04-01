@@ -76,6 +76,6 @@ export default CustomButton;
 
 const styles = StyleSheet.create({
   btnBorderRadius: {
-    borderRadius: scale(20),
+    borderRadius: scale(10),
   },
 });

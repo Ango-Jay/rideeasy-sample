@@ -25,6 +25,18 @@ const globalUtilStyles = ScaledSheet.create({
   hfull: {
     height: "100%",
   },
+  h20p: {
+    height: "20%",
+  },
+  h40p: {
+    height: "40%",
+  },
+  h60p: {
+    height: "60%",
+  },
+  hHalf: {
+    height: "50%",
+  },
   maxHeightFull: {
     maxHeight: "100%",
   },
@@ -529,6 +541,9 @@ const globalUtilStyles = ScaledSheet.create({
   },
   top0: {
     top: 0,
+  },
+  bottom0: {
+    bottom: 0,
   },
   right0: {
     right: 0,

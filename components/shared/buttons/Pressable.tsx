@@ -35,7 +35,7 @@ const CustomPressable = ({
           ? props.hitSlop
           : { top: 16, bottom: 16, left: 16, right: 16 }
       }
-      style={[innerContainerAnimatedStyle, props.style]}
+      style={[props.style, innerContainerAnimatedStyle]}
       onPressIn={() => {
         if (shouldAnimate) {
           scale.value = 0.95;

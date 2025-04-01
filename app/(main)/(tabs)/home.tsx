@@ -13,12 +13,24 @@ import BikeIcon from "@/assets/icons/bike_2.svg";
 import DeliveryIcon from "@/assets/icons/bike_1.svg";
 import HaulageIcon from "@/assets/icons/truck.svg";
 import { router } from "expo-router";
+import usePermissions from "@/hooks/usePermissions";
 
 export default function Home() {
+  const { useLocationPermission } = usePermissions();
+  const { requestLocationPermission, permissionStatus } =
+    useLocationPermission();
   const quickActionsOnPress = (id: number) => {
     switch (id) {
       case 1:
-        router.push("/home");
+        if (permissionStatus === "succcess") {
+          router.push("/home");
+        } else {
+          requestLocationPermission({
+            onSuccess: () => {
+              router.push("/(main)/(nestedtabs)/orderRide");
+            },
+          });
+        }
         break;
       case 2:
         router.push("/home");
@@ -93,12 +105,13 @@ export default function Home() {
                     item.bgColorStyle,
                     globalUtilStyles.roundedlg,
                     globalUtilStyles.itemsCenter,
-                    globalUtilStyles.justifyCenter,
-                    globalUtilStyles.gap2,
+                    globalUtilStyles.justifyBetween,
+                    globalUtilStyles.pb6,
+                    globalUtilStyles.gap3,
                   ]}
                   onPress={() => quickActionsOnPress(item.id)}
                 >
-                  {item.icon}
+                  <View style={[globalUtilStyles.mtauto]}>{item.icon}</View>
                   <CustomText weight={600} size={14}>
                     {item.title}
                   </CustomText>

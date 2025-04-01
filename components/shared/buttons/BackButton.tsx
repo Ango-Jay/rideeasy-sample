@@ -5,8 +5,7 @@ import { scale } from "react-native-size-matters";
 import globalUtilStyles from "@/styles";
 import { router } from "expo-router";
 
-interface Props extends TouchableOpacityProps {}
-const BackButton = ({ ...props }: Props) => {
+const BackButton = ({ ...props }: TouchableOpacityProps) => {
   return (
     <CustomPressable
       {...props}
@@ -30,8 +29,8 @@ const BackButton = ({ ...props }: Props) => {
 };
 const styles = StyleSheet.create({
   dimensions: {
-    width: scale(24),
-    height: scale(24),
+    width: scale(32),
+    height: scale(32),
   },
   icon: {
     transform: [{ rotate: "90deg" }],

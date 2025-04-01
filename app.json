@@ -10,6 +10,11 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "We need access to your camera to enable you to capture and upload images",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "We need access to your location to display relevant properties in your area",
+        "NSPhotoLibraryUsageDescription": "We need access to your photos to allow image upload"
+      },
       "bundleIdentifier": "com.angojay.rideeasysample"
     },
     "android": {
@@ -17,6 +22,14 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_BACKGROUND_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.READ_MEDIA_IMAGES"
+
+      ],
       "package": "com.angojay.rideeasysample"
     },
     "web": {
@@ -33,6 +46,12 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow RideEasy to use your location."
         }
       ]
     ],
