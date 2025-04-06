@@ -2,7 +2,7 @@ import globalUtilStyles from "@/styles";
 import { bgColorStyle, textColorStyle } from "@/styles/color";
 import { useEffect, useState } from "react";
 import { SafeAreaView, StatusBar, View } from "react-native";
-import MapView from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import BackButton from "@/components/shared/buttons/BackButton";
 import { Tab, TabPanel } from "@/components/shared/utils/Tabs";
@@ -13,6 +13,8 @@ import SelectLocation from "@/components/RideOrder/SelectLocation";
 import SelectPaymentType from "@/components/RideOrder/SelectPaymentType";
 import FadeInFadeOutView from "@/components/shared/animation-utils/FadeInFadeOutView";
 import SelectDriver from "@/components/RideOrder/SelectDriver";
+import DriverAccept from "@/components/RideOrder/DriverAccept";
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "@/constants";
 
 export default function OrderRide() {
   const [location, setLocation] = useState<Location.LocationObject | null>(
@@ -28,7 +30,7 @@ export default function OrderRide() {
 
   const [currentTab, setCurrentTab] = useState<TABS>(TABS.NOW);
   const isNow = currentTab === TABS.NOW;
-  const [activeStage, setActiveStage] = useState(2);
+  const [activeStage, setActiveStage] = useState(3);
   const [rideLocation, setRideLocation] = useState<RideLocation>({
     pickup: "",
     destination: "",
@@ -39,8 +41,8 @@ export default function OrderRide() {
   const setDestinationLocation = (destinationLocation: string) => {
     setRideLocation({ ...rideLocation, destination: destinationLocation });
   };
-  const hasSelectedLocation = !!activeStage;
-
+  const hasSelectedLocation = activeStage >= 1;
+  const hasSelectedDriver = activeStage === 3;
   const stages = {
     1: (
       <SelectPaymentType
@@ -66,133 +68,144 @@ export default function OrderRide() {
       <View style={[globalUtilStyles.flex1]}>
         {location && (
           <MapView
+            provider={PROVIDER_GOOGLE}
             initialRegion={{
               latitude: location.coords.latitude,
               longitude: location.coords.longitude,
               latitudeDelta: 0.01,
               longitudeDelta: 0.01,
             }}
-            style={[globalUtilStyles.flex1]}
+            style={[
+              globalUtilStyles.flex1,
+              {
+                width: SCREEN_WIDTH,
+                height: SCREEN_HEIGHT,
+              },
+            ]}
           />
         )}
 
-        <View
-          style={[
-            globalUtilStyles.absolute,
-            globalUtilStyles.flex1,
-            globalUtilStyles.wfull,
-            globalUtilStyles.hfull,
-            globalUtilStyles.bottom0,
-            globalUtilStyles.pt4,
-            globalUtilStyles.px4,
-            {
-              backgroundColor: "rgba(0, 0, 0, 0.6)",
-            },
-          ]}
-        >
+        {hasSelectedDriver ? (
+          <DriverAccept goToPreviousStage={() => setActiveStage(2)} />
+        ) : (
           <View
             style={[
-              globalUtilStyles.flexRow,
-              globalUtilStyles.itemsCenter,
+              globalUtilStyles.absolute,
+              globalUtilStyles.flex1,
               globalUtilStyles.wfull,
-              globalUtilStyles.gap4,
+              globalUtilStyles.hfull,
+              globalUtilStyles.bottom0,
+              globalUtilStyles.pt4,
+              globalUtilStyles.px4,
               {
-                display: hasSelectedLocation ? "none" : "flex",
+                backgroundColor: "rgba(0, 0, 0, 0.6)",
               },
             ]}
           >
-            <BackButton
-              style={[bgColorStyle.white, globalUtilStyles.roundedmd]}
-            />
             <View
               style={[
                 globalUtilStyles.flexRow,
-                globalUtilStyles.flex1,
-                bgColorStyle.white,
+                globalUtilStyles.itemsCenter,
+                globalUtilStyles.wfull,
+                globalUtilStyles.gap4,
                 {
-                  height: scale(30),
-                  borderRadius: scale(7),
+                  display: hasSelectedLocation ? "none" : "flex",
                 },
               ]}
             >
-              <Tab
-                id={TABS.NOW}
-                currentTab={currentTab}
-                changeTab={setCurrentTab}
+              <BackButton
+                style={[bgColorStyle.white, globalUtilStyles.roundedmd]}
+              />
+              <View
                 style={[
-                  globalUtilStyles.py2,
-                  globalUtilStyles.px4,
+                  globalUtilStyles.flexRow,
                   globalUtilStyles.flex1,
-                  globalUtilStyles.itemsCenter,
+                  bgColorStyle.white,
+                  {
+                    height: scale(30),
+                    borderRadius: scale(7),
+                  },
                 ]}
               >
-                <CustomText
-                  weight={600}
-                  size={14}
+                <Tab
+                  id={TABS.NOW}
+                  currentTab={currentTab}
+                  changeTab={setCurrentTab}
                   style={[
-                    isNow ? textColorStyle.white : textColorStyle.primary,
+                    globalUtilStyles.py2,
+                    globalUtilStyles.px4,
+                    globalUtilStyles.flex1,
+                    globalUtilStyles.itemsCenter,
                   ]}
                 >
-                  Now
-                </CustomText>
-              </Tab>
-              <Tab
-                id={TABS.SCHEDULED}
-                currentTab={currentTab}
-                changeTab={setCurrentTab}
+                  <CustomText
+                    weight={600}
+                    size={14}
+                    style={[
+                      isNow ? textColorStyle.white : textColorStyle.primary,
+                    ]}
+                  >
+                    Now
+                  </CustomText>
+                </Tab>
+                <Tab
+                  id={TABS.SCHEDULED}
+                  currentTab={currentTab}
+                  changeTab={setCurrentTab}
+                  style={[
+                    globalUtilStyles.py2,
+                    globalUtilStyles.px4,
+                    globalUtilStyles.flex1,
+                    globalUtilStyles.itemsCenter,
+                  ]}
+                >
+                  <CustomText
+                    weight={600}
+                    size={14}
+                    style={[
+                      !isNow ? textColorStyle.white : textColorStyle.primary,
+                      globalUtilStyles.textCenter,
+                    ]}
+                  >
+                    Scheduled
+                  </CustomText>
+                </Tab>
+              </View>
+              <CustomPressable
                 style={[
-                  globalUtilStyles.py2,
-                  globalUtilStyles.px4,
-                  globalUtilStyles.flex1,
-                  globalUtilStyles.itemsCenter,
+                  bgColorStyle.white,
+                  globalUtilStyles.roundedmd,
+                  {
+                    width: scale(30),
+                    height: scale(30),
+                  },
                 ]}
               >
-                <CustomText
-                  weight={600}
-                  size={14}
-                  style={[
-                    !isNow ? textColorStyle.white : textColorStyle.primary,
-                    globalUtilStyles.textCenter,
-                  ]}
-                >
-                  Scheduled
-                </CustomText>
-              </Tab>
+                <View />
+              </CustomPressable>
             </View>
-            <CustomPressable
-              style={[
-                bgColorStyle.white,
-                globalUtilStyles.roundedmd,
-                {
-                  width: scale(30),
-                  height: scale(30),
-                },
-              ]}
-            >
-              <View />
-            </CustomPressable>
+            {hasSelectedLocation ? (
+              <FadeInFadeOutView
+                uniqueKey={`order-ride-stage-${activeStage}`}
+                collapsable={false}
+                style={[globalUtilStyles.flex1]}
+              >
+                {stages[activeStage as keyof typeof stages]}
+              </FadeInFadeOutView>
+            ) : (
+              <>
+                <TabPanel id={TABS.NOW} currentTab={currentTab}>
+                  <SelectLocation
+                    rideLocation={rideLocation}
+                    setPickupLocation={setPickupLocation}
+                    setDestinationLocation={setDestinationLocation}
+                    goToNextStage={() => setActiveStage(1)}
+                  />
+                </TabPanel>
+              </>
+            )}
           </View>
-          {hasSelectedLocation ? (
-            <FadeInFadeOutView
-              uniqueKey={`order-ride-stage-${activeStage}`}
-              collapsable={false}
-              style={[globalUtilStyles.flex1]}
-            >
-              {stages[activeStage as keyof typeof stages]}
-            </FadeInFadeOutView>
-          ) : (
-            <>
-              <TabPanel id={TABS.NOW} currentTab={currentTab}>
-                <SelectLocation
-                  rideLocation={rideLocation}
-                  setPickupLocation={setPickupLocation}
-                  setDestinationLocation={setDestinationLocation}
-                  goToNextStage={() => setActiveStage(1)}
-                />
-              </TabPanel>
-            </>
-          )}
-        </View>
+        )}
       </View>
     </SafeAreaView>
   );

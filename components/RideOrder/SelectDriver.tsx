@@ -6,6 +6,7 @@ import BackButton from "../shared/buttons/BackButton";
 import { bgColorStyle } from "@/styles/color";
 import CustomText from "../shared/Text";
 import { scale } from "react-native-size-matters";
+import { useState } from "react";
 
 interface Props {
   goToNextStage: () => void;
