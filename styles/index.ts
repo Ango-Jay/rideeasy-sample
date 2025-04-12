@@ -136,6 +136,9 @@ const globalUtilStyles = ScaledSheet.create({
   p0: {
     padding: 0,
   },
+  p1: {
+    padding: "4@s",
+  },
   p2: {
     padding: "8@s",
   },

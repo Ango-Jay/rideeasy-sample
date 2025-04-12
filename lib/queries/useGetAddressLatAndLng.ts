@@ -1,19 +1,27 @@
 import { useQuery } from "@tanstack/react-query";
 import { GET_ADDRESS_LAT_LNG } from "../api/google";
 
-export const useGetAddressLatAndLng = (args: { address?: string }) => {
+export const useGetAddressLatAndLng = (args: {
+  placeId?: string;
+  enabled: boolean;
+}) => {
   const query = useQuery({
-    queryKey: ["getAddressLatAndLng"],
+    queryKey: ["getAddressLatAndLng", args.placeId],
     queryFn: () =>
       GET_ADDRESS_LAT_LNG({
-        address: args.address || "",
+        address: args.placeId || "",
       }),
-    enabled: !!args.address,
+    enabled: args.enabled,
   });
-
-  return {
+  const response = {
     ...query,
-    data: {},
+    data: query.data?.data.results?.map((result) => {
+      return {
+        latitude: result.geometry.location.lat,
+        longitude: result.geometry.location.lng,
+      };
+    })?.[0],
   };
+  return response;
 };
 export default useGetAddressLatAndLng;

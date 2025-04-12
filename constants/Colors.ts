@@ -17,4 +17,5 @@ export const appColors = {
   yellowLight: "#FEF8E1",
   greenLight: "#E4FBE4",
   blueLight: "#CDEDFF",
+  amber: "#F7B32B",
 };

@@ -3,13 +3,13 @@ import BackButton from "../shared/buttons/BackButton";
 import LocationSearchInput from "../shared/utils/LocationSearchInput";
 import globalUtilStyles from "@/styles";
 import RadioButton from "../shared/buttons/RadioButton";
-import type { RideLocation } from "./BookRide";
 import { bgColorStyle } from "@/styles/color";
 import { useState } from "react";
 import { nairaSymbol } from "@/constants";
 import CustomButton from "../shared/buttons";
 import CustomText from "../shared/Text";
 import CustomPressable from "../shared/buttons/Pressable";
+import { RideLocation } from "@/app/(main)/(nestedtabs)/orderRide";
 
 interface Props {
   goToNextStage: () => void;

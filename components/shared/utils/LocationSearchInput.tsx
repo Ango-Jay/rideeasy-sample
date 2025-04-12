@@ -2,12 +2,13 @@ import globalUtilStyles from "@/styles";
 import { bgColorStyle, borderColorStyle } from "@/styles/color";
 import { StyleSheet, View, TextInputProps, TextInput } from "react-native";
 import { moderateVerticalScale, scale } from "react-native-size-matters";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SearchIcon from "@/assets/icons/search.svg";
 import CloseIcon from "@/assets/icons/x_mark.svg";
 import PointIcon from "@/assets/icons/location_clip.svg";
 import { appColors } from "@/constants/Colors";
 import { MontserratFontStyle } from "@/styles/fonts";
+import CustomPressable from "../buttons/Pressable";
 
 interface Props extends TextInputProps {
   placeholder: string;
@@ -22,6 +23,12 @@ const LocationSearchInput = ({
   isFocused,
   ...props
 }: Props) => {
+  const inputRef = useRef<TextInput | null>(null);
+  useEffect(() => {
+    if (isFocused) {
+      inputRef.current?.focus();
+    }
+  }, [isFocused]);
   return (
     <View
       style={[
@@ -40,6 +47,7 @@ const LocationSearchInput = ({
       {value && !isFocused ? <PointIcon /> : <SearchIcon />}
       <TextInput
         {...props}
+        ref={inputRef}
         onChangeText={onChangeText}
         value={value}
         style={[
@@ -48,7 +56,11 @@ const LocationSearchInput = ({
           MontserratFontStyle.fontNormal,
         ]}
       />
-      {value && isFocused && <CloseIcon fill={appColors.black} />}
+      {value && isFocused && (
+        <CustomPressable onPress={() => onChangeText("")}>
+          <CloseIcon fill={appColors.black} />
+        </CustomPressable>
+      )}
     </View>
   );
 };

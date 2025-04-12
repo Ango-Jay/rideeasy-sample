@@ -1,9 +1,15 @@
 import axios from "axios";
 
+export const googleApi = axios.create({
+  timeout: 10000,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 export const GET_POSSIBLE_ADDRESS_MATCHES = async (data: {
   address: string;
 }) => {
-  return await axios.post<GetPossibleAddressMatchesDataResponse>(
+  return await googleApi.post<GetPossibleAddressMatchesDataResponse>(
     "https://places.googleapis.com/v1/places:autocomplete",
     {
       input: data.address,
@@ -22,7 +28,8 @@ export const GET_POSSIBLE_ADDRESS_MATCHES = async (data: {
       headers: {
         "Content-Type": "application/json",
         "X-Goog-Api-Key": "AIzaSyBBwjj4vULZXlcU28afHjgYUEq5hafXt04",
-        "X-Goog-FieldMask": "suggestions.placePrediction.text",
+        "X-Goog-FieldMask":
+          "suggestions.placePrediction.placeId,suggestions.placePrediction.text",
       },
     },
   );
@@ -43,17 +50,21 @@ type GetPossibleAddressMatchesDataResponse = {
   ];
 };
 export const GET_ADDRESS_LAT_LNG = async (queryParams: { address: string }) => {
-  return await axios.get<GetAddressLatAndLngDataResponse>(
+  return await googleApi.get<GetAddressLatAndLngDataResponse>(
     "https://maps.googleapis.com/maps/api/geocode/json",
     {
       params: {
+        place_id: queryParams.address,
+        region: "ng",
         key: "AIzaSyBBwjj4vULZXlcU28afHjgYUEq5hafXt04",
-        address: encodeURI(queryParams.address),
       },
     },
   );
 };
-
+// googleApi.interceptors.request.use(request => {
+//   console.log('Starting Request', JSON.stringify(request, null, 2))
+//   return request
+// })
 type GetAddressLatAndLngDataResponse = {
   results: {
     geometry: {

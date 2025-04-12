@@ -14,7 +14,11 @@ import SelectPaymentType from "@/components/RideOrder/SelectPaymentType";
 import FadeInFadeOutView from "@/components/shared/animation-utils/FadeInFadeOutView";
 import SelectDriver from "@/components/RideOrder/SelectDriver";
 import DriverAccept from "@/components/RideOrder/DriverAccept";
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from "@/constants";
+import { IsIOS, SCREEN_HEIGHT, SCREEN_WIDTH } from "@/constants";
+import useGetAddressLatAndLng from "@/lib/queries/useGetAddressLatAndLng";
+import { MapViewRoute } from "react-native-maps-routes";
+import { appColors } from "@/constants/Colors";
+import CustomMarker from "@/components/shared/utils/CustomMarker";
 
 export default function OrderRide() {
   const [location, setLocation] = useState<Location.LocationObject | null>(
@@ -30,17 +34,53 @@ export default function OrderRide() {
 
   const [currentTab, setCurrentTab] = useState<TABS>(TABS.NOW);
   const isNow = currentTab === TABS.NOW;
-  const [activeStage, setActiveStage] = useState(3);
-  const [rideLocation, setRideLocation] = useState<RideLocation>({
-    pickup: "",
-    destination: "",
+  const [activeStage, setActiveStage] = useState(0);
+  const [pickup, setPickup] = useState({
+    address: "",
+    placeId: "",
   });
-  const setPickupLocation = (pickupLocation: string) => {
-    setRideLocation({ ...rideLocation, pickup: pickupLocation });
+  const [destination, setDestination] = useState({
+    address: "",
+    placeId: "",
+  });
+  const setPickupLocation = (value: string, field: "placeId" | "address") => {
+    setPickup((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   };
-  const setDestinationLocation = (destinationLocation: string) => {
-    setRideLocation({ ...rideLocation, destination: destinationLocation });
+  const setDestinationLocation = (
+    value: string,
+    field: "placeId" | "address",
+  ) => {
+    setDestination((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   };
+  const rideLocationAdress = {
+    pickup: pickup.address,
+    destination: destination.address,
+  };
+  const { data: pickupLocationLatAndLn, isFetching: isPickupFetching } =
+    useGetAddressLatAndLng({
+      placeId: pickup.placeId,
+      enabled: activeStage === 1,
+    });
+  const { data: destinationLatAndLng, isFetching: isDestinationFetching } =
+    useGetAddressLatAndLng({
+      placeId: destination.placeId,
+      enabled: activeStage === 1 && !!pickupLocationLatAndLn,
+    });
+  const pcikupCords = {
+    latitude: pickupLocationLatAndLn?.latitude || 0,
+    longitude: pickupLocationLatAndLn?.longitude || 0,
+  };
+  const destinationCords = {
+    latitude: destinationLatAndLng?.latitude || 0,
+    longitude: destinationLatAndLng?.longitude || 0,
+  };
+  // const isFetching = isPickupFetching || isDestinationFetching; TODO use for spinner
   const hasSelectedLocation = activeStage >= 1;
   const hasSelectedDriver = activeStage === 3;
   const stages = {
@@ -48,7 +88,7 @@ export default function OrderRide() {
       <SelectPaymentType
         goToNextStage={() => setActiveStage(2)}
         goToPreviousStage={() => setActiveStage(0)}
-        rideLocation={rideLocation}
+        rideLocation={rideLocationAdress}
       />
     ),
     2: (
@@ -68,7 +108,7 @@ export default function OrderRide() {
       <View style={[globalUtilStyles.flex1]}>
         {location && (
           <MapView
-            provider={PROVIDER_GOOGLE}
+            provider={!IsIOS ? PROVIDER_GOOGLE : undefined}
             initialRegion={{
               latitude: location.coords.latitude,
               longitude: location.coords.longitude,
@@ -82,7 +122,25 @@ export default function OrderRide() {
                 height: SCREEN_HEIGHT,
               },
             ]}
-          />
+          >
+            <CustomMarker
+              coordinate={pcikupCords}
+              strokeColor={appColors.amber}
+            />
+            <CustomMarker
+              coordinate={destinationCords}
+              strokeColor={appColors.primary}
+            />
+            {pickupLocationLatAndLn && destinationLatAndLng && (
+              <MapViewRoute
+                origin={pcikupCords}
+                destination={destinationCords}
+                apiKey={"AIzaSyBBwjj4vULZXlcU28afHjgYUEq5hafXt04"}
+                strokeColor={appColors.amber}
+                mode="DRIVE"
+              />
+            )}
+          </MapView>
         )}
 
         {hasSelectedDriver ? (
@@ -196,7 +254,7 @@ export default function OrderRide() {
               <>
                 <TabPanel id={TABS.NOW} currentTab={currentTab}>
                   <SelectLocation
-                    rideLocation={rideLocation}
+                    rideLocation={rideLocationAdress}
                     setPickupLocation={setPickupLocation}
                     setDestinationLocation={setDestinationLocation}
                     goToNextStage={() => setActiveStage(1)}
@@ -207,6 +265,7 @@ export default function OrderRide() {
           </View>
         )}
       </View>
+      {}
     </SafeAreaView>
   );
 }

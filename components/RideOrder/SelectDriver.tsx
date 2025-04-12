@@ -6,7 +6,6 @@ import BackButton from "../shared/buttons/BackButton";
 import { bgColorStyle } from "@/styles/color";
 import CustomText from "../shared/Text";
 import { scale } from "react-native-size-matters";
-import { useState } from "react";
 
 interface Props {
   goToNextStage: () => void;
@@ -42,7 +41,11 @@ const SelectDriver = ({ goToNextStage, goToPreviousStage }: Props) => {
             <DriverItem key={item} />
           ))}
         </ScrollView>
-        <CustomButton style={[globalUtilStyles.wfull]} text="Book Ride" />
+        <CustomButton
+          onPress={goToNextStage}
+          style={[globalUtilStyles.wfull]}
+          text="Book Ride"
+        />
       </View>
     </View>
   );
