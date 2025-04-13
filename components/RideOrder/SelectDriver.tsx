@@ -2,31 +2,23 @@ import globalUtilStyles from "@/styles";
 import { ScrollView, View } from "react-native";
 import CustomButton from "../shared/buttons";
 import CustomTextInput from "../shared/form/CustomTextInput";
-import BackButton from "../shared/buttons/BackButton";
 import { bgColorStyle } from "@/styles/color";
 import CustomText from "../shared/Text";
 import { scale } from "react-native-size-matters";
 
 interface Props {
   goToNextStage: () => void;
-  goToPreviousStage: () => void;
 }
 
-const SelectDriver = ({ goToNextStage, goToPreviousStage }: Props) => {
+const SelectDriver = ({ goToNextStage }: Props) => {
   return (
     <View
       style={[
         globalUtilStyles.flex1,
-        globalUtilStyles.justifyBetween,
-        globalUtilStyles.pb6,
+        globalUtilStyles.justifyEnd,
+        globalUtilStyles.py6,
       ]}
     >
-      <View style={[globalUtilStyles.mb6]}>
-        <BackButton
-          style={[bgColorStyle.white, globalUtilStyles.roundedmd]}
-          onPress={goToPreviousStage}
-        />
-      </View>
       <View style={[globalUtilStyles.wfull, globalUtilStyles.gap4]}>
         <CustomTextInput
           labelTitle=""

@@ -1,5 +1,4 @@
 import { View } from "react-native";
-import BackButton from "../shared/buttons/BackButton";
 import LocationSearchInput from "../shared/utils/LocationSearchInput";
 import globalUtilStyles from "@/styles";
 import RadioButton from "../shared/buttons/RadioButton";
@@ -28,12 +27,6 @@ const SelectPaymentType = ({
   const [isInsufficientFunds] = useState(false);
   return (
     <View style={[globalUtilStyles.flex1, globalUtilStyles.py6]}>
-      <View style={[globalUtilStyles.mb6]}>
-        <BackButton
-          style={[bgColorStyle.white, globalUtilStyles.roundedmd]}
-          onPress={goToPreviousStage}
-        />
-      </View>
       <View>
         <LocationSearchInput
           placeholder="Search for a location"

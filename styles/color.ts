@@ -50,6 +50,9 @@ export const bgColorStyle = StyleSheet.create({
   blueLight: {
     backgroundColor: appColors.blueLight,
   },
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+  },
 });
 
 export const borderColorStyle = StyleSheet.create({
