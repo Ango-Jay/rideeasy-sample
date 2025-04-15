@@ -8,7 +8,8 @@ import ProgressBar from "../shared/ProgressBar";
 import { appColors } from "@/constants/Colors";
 import { useState } from "react";
 import BackButton from "../shared/buttons/BackButton";
-
+import PhoneIcon from "@/assets/icons/phone.svg";
+import MessageIcon from "@/assets/icons/message.svg";
 interface Props {
   goToPreviousStage: () => void;
 }
@@ -97,13 +98,19 @@ const DriverAccept = ({ goToPreviousStage }: Props) => {
             ]}
           >
             <CustomButton
-              containerStyle={[globalUtilStyles.grow]}
+              containerStyle={[
+                globalUtilStyles.grow,
+                globalUtilStyles.gap2,
+                globalUtilStyles.flexRow,
+                globalUtilStyles.itemsCenter,
+              ]}
               style={[
                 bgColorStyle.white,
                 globalUtilStyles.border1,
                 borderColorStyle.primary,
               ]}
             >
+              <PhoneIcon />
               <CustomText
                 weight={600}
                 size={14}
@@ -112,7 +119,20 @@ const DriverAccept = ({ goToPreviousStage }: Props) => {
                 Call
               </CustomText>
             </CustomButton>
-            <CustomButton containerStyle={[globalUtilStyles.grow]}>
+            <CustomButton
+              containerStyle={[
+                globalUtilStyles.grow,
+                globalUtilStyles.gap2,
+                globalUtilStyles.flexRow,
+                globalUtilStyles.itemsCenter,
+              ]}
+              style={[
+                bgColorStyle.white,
+                globalUtilStyles.border1,
+                borderColorStyle.primary,
+              ]}
+            >
+              <MessageIcon />
               <CustomText weight={600} size={14} style={[textColorStyle.white]}>
                 Message
               </CustomText>
