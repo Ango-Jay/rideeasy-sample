@@ -61,10 +61,59 @@ export const GET_ADDRESS_LAT_LNG = async (queryParams: { address: string }) => {
     },
   );
 };
+
+export const GET_ROUTE_DETAILS = async (data: {
+  originLatAndLng: {
+    latitude: number;
+    longitude: number;
+  };
+  destinationLatAndLng: {
+    latitude: number;
+    longitude: number;
+  };
+  travelMode: "DRIVE";
+}) => {
+  return await googleApi.post<GetRouteDetailsResponse>(
+    "https://routes.googleapis.com/distanceMatrix/v2:computeRouteMatrix",
+    {
+      origins: [
+        {
+          waypoint: {
+            location: {
+              latLng: data.originLatAndLng,
+            },
+          },
+        },
+      ],
+      destinations: [
+        {
+          waypoint: {
+            location: {
+              latLng: data.destinationLatAndLng,
+            },
+          },
+        },
+      ],
+      travelMode: data.travelMode,
+    },
+    {
+      headers: {
+        "X-Goog-Api-Key": "AIzaSyBBwjj4vULZXlcU28afHjgYUEq5hafXt04",
+        "X-Goog-FieldMask": "duration",
+      },
+    },
+  );
+};
+
 // googleApi.interceptors.request.use(request => {
 //   console.log('Starting Request', JSON.stringify(request, null, 2))
 //   return request
 // })
+
+type GetRouteDetailsResponse = {
+  status: string;
+  duration: string;
+};
 type GetAddressLatAndLngDataResponse = {
   results: {
     geometry: {

@@ -20,6 +20,8 @@ import { MapViewRoute } from "react-native-maps-routes";
 import { appColors } from "@/constants/Colors";
 import CustomMarker from "@/components/shared/utils/CustomMarker";
 import { router } from "expo-router";
+import { useMutation } from "@tanstack/react-query";
+import { GET_ROUTE_DETAILS } from "@/lib/api/google";
 
 export default function OrderRide() {
   const [location, setLocation] = useState<Location.LocationObject | null>(
@@ -82,6 +84,18 @@ export default function OrderRide() {
     latitude: destinationLatAndLng?.latitude || 0,
     longitude: destinationLatAndLng?.longitude || 0,
   };
+  const routeDetailsMutatiion = useMutation({
+    mutationFn: GET_ROUTE_DETAILS,
+  });
+  useEffect(() => {
+    if (pcikupCords && destinationLatAndLng) {
+      routeDetailsMutatiion.mutate({
+        originLatAndLng: pcikupCords,
+        destinationLatAndLng: destinationCords,
+        travelMode: "DRIVE",
+      });
+    }
+  }, [pickupLocationLatAndLn?.latitude, destinationLatAndLng?.latitude]);
   // const isFetching = isPickupFetching || isDestinationFetching; TODO use for spinner
   const hasSelectedLocation = activeStage >= 1;
   const hasSelectedDriver = activeStage === 3;
@@ -103,6 +117,7 @@ export default function OrderRide() {
     ),
     2: <SelectDriver goToNextStage={() => setActiveStage(3)} />,
   };
+
   return (
     <SafeAreaView style={[globalUtilStyles.flex1, bgColorStyle.white]}>
       <StatusBar
