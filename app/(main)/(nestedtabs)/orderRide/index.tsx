@@ -18,10 +18,13 @@ import { IsIOS, SCREEN_HEIGHT, SCREEN_WIDTH } from "@/constants";
 import useGetAddressLatAndLng from "@/lib/queries/useGetAddressLatAndLng";
 import { MapViewRoute } from "react-native-maps-routes";
 import { appColors } from "@/constants/Colors";
-import CustomMarker from "@/components/shared/utils/CustomMarker";
+import CustomMarker from "@/components/shared/utils/marker-utils/CustomMarker";
 import { router } from "expo-router";
 import { useMutation } from "@tanstack/react-query";
 import { GET_ROUTE_DETAILS } from "@/lib/api/google";
+import NormalBanner from "@/components/shared/utils/marker-utils/NormalBanner";
+import ArriveByBanner from "@/components/shared/utils/marker-utils/ArriveByBanner";
+import { getMinutesFromSeconds } from "@/utils/getMinutesFromSeconds";
 
 export default function OrderRide() {
   const [location, setLocation] = useState<Location.LocationObject | null>(
@@ -65,7 +68,11 @@ export default function OrderRide() {
       [field]: value,
     }));
   };
-
+  // driver selection
+  const [selectedDriver, setSelectedDriver] = useState<Driver | null>(null);
+  const handleSelectDriver = (driver: Driver) => {
+    setSelectedDriver(driver);
+  };
   const { data: pickupLocationLatAndLn, isFetching: isPickupFetching } =
     useGetAddressLatAndLng({
       placeId: pickup.placeId,
@@ -87,6 +94,13 @@ export default function OrderRide() {
   const routeDetailsMutatiion = useMutation({
     mutationFn: GET_ROUTE_DETAILS,
   });
+
+  const timeToRideCompletionInMins = routeDetailsMutatiion.data?.data[0]
+    .duration
+    ? getMinutesFromSeconds(
+        Number(routeDetailsMutatiion.data.data[0].duration.split("s")[0]),
+      )
+    : "";
   useEffect(() => {
     if (pcikupCords && destinationLatAndLng) {
       routeDetailsMutatiion.mutate({
@@ -115,7 +129,13 @@ export default function OrderRide() {
         rideLocation={rideLocationAdress}
       />
     ),
-    2: <SelectDriver goToNextStage={() => setActiveStage(3)} />,
+    2: (
+      <SelectDriver
+        selectedDriver={selectedDriver}
+        handleSelectDriver={handleSelectDriver}
+        goToNextStage={() => setActiveStage(3)}
+      />
+    ),
   };
 
   return (
@@ -125,7 +145,7 @@ export default function OrderRide() {
         backgroundColor={"transparent"}
         barStyle={"dark-content"}
       />
-      <View style={[globalUtilStyles.flex1]}>
+      <View style={[globalUtilStyles.flex1, globalUtilStyles.grow]}>
         {location && (
           <MapView
             provider={!IsIOS ? PROVIDER_GOOGLE : undefined}
@@ -148,11 +168,25 @@ export default function OrderRide() {
                 <CustomMarker
                   coordinate={pcikupCords}
                   strokeColor={appColors.amber}
-                />
+                >
+                  <NormalBanner
+                    text={
+                      selectedDriver
+                        ? selectedDriver?.distance.split(" ")[0]
+                        : ""
+                    }
+                    backgroundColorStyle={bgColorStyle.green}
+                  />
+                </CustomMarker>
                 <CustomMarker
                   coordinate={destinationCords}
                   strokeColor={appColors.primary}
-                />
+                >
+                  <ArriveByBanner
+                    text={timeToRideCompletionInMins}
+                    backgroundColorStyle={bgColorStyle.primary}
+                  />
+                </CustomMarker>
                 <MapViewRoute
                   origin={pcikupCords}
                   destination={destinationCords}
@@ -303,4 +337,12 @@ enum TABS {
 export type RideLocation = {
   pickup: string;
   destination: string;
+};
+export type Driver = {
+  id: number;
+  name: string;
+  car: string;
+  rating: number;
+  distance: string;
+  noOfRides: number;
 };

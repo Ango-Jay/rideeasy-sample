@@ -98,13 +98,12 @@ const DriverAccept = ({ goToPreviousStage }: Props) => {
             ]}
           >
             <CustomButton
-              containerStyle={[
+              containerStyle={[globalUtilStyles.grow]}
+              style={[
                 globalUtilStyles.grow,
                 globalUtilStyles.gap2,
                 globalUtilStyles.flexRow,
                 globalUtilStyles.itemsCenter,
-              ]}
-              style={[
                 bgColorStyle.white,
                 globalUtilStyles.border1,
                 borderColorStyle.primary,
@@ -120,14 +119,13 @@ const DriverAccept = ({ goToPreviousStage }: Props) => {
               </CustomText>
             </CustomButton>
             <CustomButton
-              containerStyle={[
+              containerStyle={[globalUtilStyles.grow]}
+              style={[
                 globalUtilStyles.grow,
                 globalUtilStyles.gap2,
                 globalUtilStyles.flexRow,
                 globalUtilStyles.itemsCenter,
-              ]}
-              style={[
-                bgColorStyle.white,
+                bgColorStyle.primary,
                 globalUtilStyles.border1,
                 borderColorStyle.primary,
               ]}

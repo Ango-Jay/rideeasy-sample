@@ -7,17 +7,20 @@ import CustomText from "../shared/Text";
 import { scale } from "react-native-size-matters";
 import { useState } from "react";
 import CustomPressable from "../shared/buttons/Pressable";
+import { Driver } from "@/app/(main)/(nestedtabs)/orderRide";
 
 interface Props {
+  selectedDriver: Driver | null;
+  handleSelectDriver: (driver: Driver) => void;
   goToNextStage: () => void;
 }
 
-const SelectDriver = ({ goToNextStage }: Props) => {
+const SelectDriver = ({
+  goToNextStage,
+  selectedDriver,
+  handleSelectDriver,
+}: Props) => {
   const [searchText, setSearchText] = useState("");
-  const [selectedDriver, setSelectedDriver] = useState<Driver | null>(null);
-  const handleSelectDriver = (driver: Driver) => {
-    setSelectedDriver(driver);
-  };
   const isBookingDisabled = selectedDriver === null;
   return (
     <View
@@ -119,14 +122,6 @@ const DriverItem = ({
   );
 };
 
-type Driver = {
-  id: number;
-  name: string;
-  car: string;
-  rating: number;
-  distance: string;
-  noOfRides: number;
-};
 const MOCK_DRIVERS: Driver[] = [
   {
     id: 1,

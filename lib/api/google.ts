@@ -113,7 +113,7 @@ export const GET_ROUTE_DETAILS = async (data: {
 type GetRouteDetailsResponse = {
   status: string;
   duration: string;
-};
+}[];
 type GetAddressLatAndLngDataResponse = {
   results: {
     geometry: {

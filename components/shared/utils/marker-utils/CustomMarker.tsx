@@ -3,12 +3,19 @@ import { bgColorStyle } from "@/styles/color";
 import { StyleSheet, View } from "react-native";
 import { Marker, type LatLng } from "react-native-maps";
 import { scale } from "react-native-size-matters";
+import type { ReactNode } from "react";
 
 interface Props {
   coordinate: LatLng;
   strokeColor: string;
+  children: ReactNode;
 }
-const CustomMarker = ({ coordinate, strokeColor }: Props) => {
+const CustomMarker = ({
+  coordinate,
+  strokeColor,
+  children,
+  ...props
+}: Props) => {
   return (
     <Marker coordinate={coordinate}>
       <View
@@ -19,6 +26,7 @@ const CustomMarker = ({ coordinate, strokeColor }: Props) => {
           globalUtilStyles.justifyCenter,
           styles.container,
         ]}
+        {...props}
       >
         <View
           style={[
@@ -44,6 +52,7 @@ const CustomMarker = ({ coordinate, strokeColor }: Props) => {
             ]}
           />
         </View>
+        {children}
       </View>
     </Marker>
   );
