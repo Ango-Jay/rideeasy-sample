@@ -27,7 +27,7 @@ export const GET_POSSIBLE_ADDRESS_MATCHES = async (data: {
     {
       headers: {
         "Content-Type": "application/json",
-        "X-Goog-Api-Key": "AIzaSyBBwjj4vULZXlcU28afHjgYUEq5hafXt04",
+        "X-Goog-Api-Key": process.env.MAP_KEY,
         "X-Goog-FieldMask":
           "suggestions.placePrediction.placeId,suggestions.placePrediction.text",
       },
@@ -56,7 +56,7 @@ export const GET_ADDRESS_LAT_LNG = async (queryParams: { address: string }) => {
       params: {
         place_id: queryParams.address,
         region: "ng",
-        key: "AIzaSyBBwjj4vULZXlcU28afHjgYUEq5hafXt04",
+        key: process.env.MAP_KEY,
       },
     },
   );
@@ -98,7 +98,7 @@ export const GET_ROUTE_DETAILS = async (data: {
     },
     {
       headers: {
-        "X-Goog-Api-Key": "AIzaSyBBwjj4vULZXlcU28afHjgYUEq5hafXt04",
+        "X-Goog-Api-Key": process.env.MAP_KEY,
         "X-Goog-FieldMask": "duration",
       },
     },

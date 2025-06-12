@@ -190,7 +190,7 @@ export default function OrderRide() {
                 <MapViewRoute
                   origin={pcikupCords}
                   destination={destinationCords}
-                  apiKey={"AIzaSyBBwjj4vULZXlcU28afHjgYUEq5hafXt04"}
+                  apiKey={process.env.MAP_KEY || "key"}
                   strokeColor={appColors.amber}
                   mode="DRIVE"
                 />
